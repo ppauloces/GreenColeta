@@ -1,0 +1,85 @@
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  #map {
+    width: 100%;
+    height: 400px;
+    margin: 0 auto;
+  }
+
+  .map-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+
+  .m1{
+    margin: 10px;
+  }
+  .m2 {
+    margin: 20px;
+  }
+  .p1-left {
+    padding-left: 10px;
+  }
+
+  .p1-right{
+    padding-right: 10px;
+  }
+
+  .m1-top {
+    margin-top: 10px;
+  }
+
+  .m2-top {
+    margin-top: 20px;
+  }
+
+
+  .text-small{
+    font-size: 12px;
+  }
+
+  .text-medium{
+    font-size: 18px;
+  }
+
+  .text-big{
+    font-size: 35px;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .progress-bar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .progress-bar {
+    flex-grow: 1;
+    height: 10px;
+    background-color: lightgray;
+    border-radius: 40px;
+    margin-right: 10px;
+  }
+
+  .progress-bar::-webkit-progress-value {
+    background-color: #42a5f5 ;
+  }
+
+  .progress-bar::-moz-progress-bar {
+    background-color: #42a5f5 ;
+  }
