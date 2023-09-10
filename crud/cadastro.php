@@ -35,13 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cadastro = new Cadastro($db);
 
         // Chame o método de cadastro
-        $token = $cadastro->cadastrarUsuario($nome, $email, $telefone, $senha);
+        $resultado = $cadastro->cadastrarUsuario($nome, $email, $telefone, $senha);
 
         // Verifique o resultado e envie uma resposta JSON
-        if ($token) {
+        if ($resultado) {
             $resposta = ['status' => 'success', 'mensagem' => 'Cadastro realizado com sucesso!', 'url' => 'http://localhost/greencoleta/auth/'];
         } else {
-            $resposta = ['status' => 'error', 'mensagem' => 'Erro no cadastro. Tente novamente mais tarde'];
+            $resposta = ['status' => 'error', 'mensagem' => 'Erro no cadastro. Verifique suas credenciais'];
         }
     }
     echo json_encode($resposta);

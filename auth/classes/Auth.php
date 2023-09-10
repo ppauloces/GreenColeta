@@ -5,69 +5,125 @@ $dir = __DIR__;
 $databasePath = realpath($dir . '/../../config/Database.php');
 
 include_once $databasePath;
+include_once 'User.php';
 
 $db = new Database();
 
 class Auth
 {
-    private $conexao;
+    private $db;
 
     public function __construct(Database $db)
     {
-        session_start();
-        $this->conexao = $db->getPdo();
+        $this->db = $db;
     }
 
-    public function getUsuarioAutenticado()
+    public function autenticarPorSessao()
     {
-        // Verifique se o usuário está autenticado (usando a sessão)
-        if (isset($_SESSION['user_id'])) {
-            $usuario = [
-                'id' => $_SESSION['user_id'],
-                'nome' => $_SESSION['user_nome'],
-                'email' => $_SESSION['user_email']
-                // Adicione outros campos aqui, se necessário
-            ];
-            return $usuario;
+        // Inicie a sessão se ainda não estiver iniciada
+        if (!isset($_SESSION)) {
+            session_start();
         }
-        return null;
+
+        // Verifique se o ID do usuário está na sessão
+        if (isset($_SESSION['user_id'])) {
+            // Consulte o banco de dados para obter informações do usuário, se necessário
+            // Você pode adicionar a lógica aqui para carregar informações adicionais do usuário se desejar
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function autenticarPorToken($token)
+    public function autenticarPorCookie()
     {
-       
-        // Consulte o banco de dados para obter informações do usuário com base no token
-        $sql = "SELECT id, nome, email, token FROM usuario WHERE token = :token";
-        $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':token', $token);
-        $stmt->execute();
-        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Verifique se o cookie de autenticação existe
+        if (isset($_COOKIE['auth_token'])) {
+            // Consulte o banco de dados para verificar se o token do cookie é válido
+            $cookieToken = $_COOKIE['auth_token'];
+            $sql = "SELECT user_id FROM auth_tokens WHERE token = :token";
+            $stmt = $this->db->getPdo()->prepare($sql);
+            $stmt->bindParam(':token', $cookieToken);
+            $stmt->execute();
+            $userId = $stmt->fetchColumn();
 
-        if ($usuario) {
-            // Verifique se o token corresponde ao token na sessão (para evitar falsificação)
-            if ($_SESSION['user_id'] === $usuario['token']) {
-                // Configure a sessão com as informações do usuário
-                $_SESSION['user_id'] = $usuario['id'];
-                $_SESSION['user_nome'] = $usuario['nome'];
-                $_SESSION['user_email'] = $usuario['email'];
-                $_SESSION['user_token'] = $usuario['token']; // Adicione o token à sessão
-                return true; // Autenticação bem-sucedida
+            if ($userId) {
+                // O token do cookie é válido, então você pode considerar o usuário autenticado
+                // Você pode adicionar a lógica aqui para carregar informações adicionais do usuário se desejar
+                return true;
             }
         }
 
-        return false; // Token inválido ou usuário não encontrado
+        return false;
     }
 
-
-    public function verificarAutenticacao()
+    public function getNomeUsuario()
     {
-        // Verifique se o usuário está autenticado (usando a sessão)
-        return isset($_SESSION['user_id']);
+        // Verifique se o ID do usuário está na sessão
+        if (isset($_SESSION['user_id'])) {
+            $userId = $_SESSION['user_id'];
+
+            // Consulte o banco de dados para obter o nome do usuário com base no ID
+            $sql = "SELECT nome FROM usuario WHERE id = :id";
+            $stmt = $this->db->getPdo()->prepare($sql);
+            $stmt->bindParam(':id', $userId);
+            $stmt->execute();
+            $nomeUsuario = $stmt->fetchColumn();
+
+            return $nomeUsuario;
+        } else {
+            return null; // Usuário não autenticado
+        }
     }
 
-    public function encerrarSessao()
+    public function getTokenUsuario()
     {
-        // Encerre a sessão
+        // Verifique se o ID do usuário está na sessão
+        if (isset($_SESSION['user_id'])) {
+            $userId = $_SESSION['user_id'];
+
+            // Consulte o banco de dados para obter o nome do usuário com base no ID
+            $sql = "SELECT token FROM usuario WHERE id = :id";
+            $stmt = $this->db->getPdo()->prepare($sql);
+            $stmt->bindParam(':id', $userId);
+            $stmt->execute();
+            $tokenUsuario = $stmt->fetchColumn();
+
+            return $tokenUsuario;
+        } else {
+            return null; // Usuário não autenticado
+        }
+    }
+
+    public function getDetalhesUsuarioLogado()
+    {
+        // Verifique se o ID do usuário está na sessão
+        if (isset($_SESSION['user_id'])) {
+            $userId = $_SESSION['user_id'];
+            $user = new User($this->db);
+            return $user->getDadosUsuario($userId);
+        } else {
+            return null; // Usuário não autenticado
+        }
+    }
+
+    public function destruirSessaoEcookie()
+    {
+        // Certifique-se de que a sessão esteja iniciada
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        // Destrua todas as variáveis de sessão
+        session_unset();
+
+        // Destrua a sessão
         session_destroy();
+
+        // Destrua o cookie de autenticação, se existir
+        if (isset($_COOKIE['auth_token'])) {
+            $cookieName = 'auth_token';
+            setcookie($cookieName, '', time() - 3600, '/');
+        }
     }
 }

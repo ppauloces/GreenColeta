@@ -45,15 +45,14 @@ class Cadastro
             session_start();
 
             // Consulte o banco de dados para obter o ID do usuário recém-cadastrado
-            $sqlGetUserId = "SELECT id, token FROM usuario WHERE email = :email";
+            $sqlGetUserId = "SELECT id FROM usuario WHERE email = :email";
             $stmtGetUserId = $this->conexao->prepare($sqlGetUserId);
             $stmtGetUserId->bindParam(':email', $email);
             $stmtGetUserId->execute();
-            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+            $userId = $stmtGetUserId->fetchColumn();
 
             // Armazene o ID do usuário na sessão
-            $_SESSION['user_id'] = $usuario['id'];
-            $_SESSION['user_token'] = $usuario['token'];
+            $_SESSION['user_id'] = $userId;
 
             // Configure um cookie de autenticação (opcional)
             $cookieName = 'auth_token';
@@ -64,8 +63,8 @@ class Cadastro
             return true;
         } catch (PDOException $e) {
             // Tratar erros de banco de dados aqui
-            //return $e->getMessage();
-            return false;
+            return $e->getMessage();
+            //return false;
         }
     }
 

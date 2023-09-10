@@ -140,13 +140,13 @@
                         console.log(data);
                         if (data.status === 'success') {
                             M.toast({
-                                html: '<i class="material-icons">error</i>&nbspCadastro realizado com sucesso!',
+                                html: '<i class="material-icons">check</i>&nbspCadastro realizado com sucesso!',
                                 classes: 'light-green darken-2'
                             });
                             setTimeout(function() {
                                 window.location.href = data.url;
                             }, 2000);
-                            
+
                         } else if (data.status === 'error') {
                             M.toast({
                                 html: '<i class="material-icons">error</i>&nbsp' + data.mensagem,
