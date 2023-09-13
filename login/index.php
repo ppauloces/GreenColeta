@@ -58,18 +58,18 @@
 
                             <button class="btn waves-effect waves-light center" type="submit" name="action">LOGIN<i class="fa fa-sign-in right"></i></button>
                         </form>
-                        <form class="col s12 m12" id="form2" style="display: none;">
+                        <form class="col s12 m12" id="form2" method="POST" style="display: none;">
                             <div class="row">
                                 <div class="input-field col s12 m12">
                                     <i class="mdi-action-account-circle prefix material-icons ">mail</i>
-                                    <input id="icon_email" type="email" class="validate">
-                                    <label for="icon_email">Seu email</label>
+                                    <input id="email" type="email" name="email" class="validate">
+                                    <label for="email">Seu email</label>
                                 </div>
 
                                 <div class="input-field col s12 m12">
                                     <i class="mdi-action-account-circle prefix material-icons ">lock</i>
-                                    <input id="icon_password" type="password" class="validate">
-                                    <label for="icon_password">Sua senha</label>
+                                    <input id="senha" name="password" type="password" class="validate">
+                                    <label for="senha">Sua senha</label>
                                 </div>
                             </div>
 
@@ -94,7 +94,39 @@
                 var formData = $(this).serialize();
 
                 $.ajax({
-                    url: '../crud/logar.php',
+                    url: '../crud/logarUsuario.php',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 'success') {
+                            M.toast({
+                                html: '<i class="material-icons">check</i>&nbspLogin realizado com sucesso!',
+                                classes: 'light-green darken-2'
+                            });
+                            setTimeout(function() {
+                                window.location.href = data.url;
+                            }, 2000);
+
+                        } else if (data.status === 'error') {
+                            M.toast({
+                                html: '<i class="material-icons">error</i>&nbsp' + data.mensagem,
+                                classes: 'lime darken-4'
+                            });
+                        }
+                    },
+
+                });
+            });
+
+            $("#form2").submit(function(event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '../crud/logarColetor.php',
                     type: 'POST',
                     data: formData,
                     dataType: 'json',

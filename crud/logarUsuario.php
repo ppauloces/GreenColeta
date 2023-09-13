@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die();
     }
 
-    $userId = $loginValidator->validar($email, $senha);
+    $userId = $loginValidator->validarUsuario($email, $senha);
 
     if ($userId) {
         // Credenciais válidas, faça o login e redirecione para a página autenticada

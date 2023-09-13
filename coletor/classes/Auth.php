@@ -5,7 +5,7 @@ $dir = __DIR__;
 $databasePath = realpath($dir . '/../../config/Database.php');
 
 include_once $databasePath;
-include_once 'User.php';
+include_once 'Coletor.php';
 
 $db = new Database();
 
@@ -26,7 +26,7 @@ class Auth
         }
 
         // Verifique se o ID do usuário está na sessão
-        if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['coletor_id'])) {
             // Consulte o banco de dados para obter informações do usuário, se necessário
             // Você pode adicionar a lógica aqui para carregar informações adicionais do usuário se desejar
             return true;
@@ -35,36 +35,16 @@ class Auth
         }
     }
 
-
-    public function getNomeUsuario()
+    public function getTokenColetor()
     {
         // Verifique se o ID do usuário está na sessão
-        if (isset($_SESSION['user_id'])) {
-            $userId = $_SESSION['user_id'];
+        if (isset($_SESSION['coletor_id'])) {
+            $coletorId = $_SESSION['coletor_id'];
 
             // Consulte o banco de dados para obter o nome do usuário com base no ID
-            $sql = "SELECT nome FROM usuario WHERE id = :id";
+            $sql = "SELECT token FROM coletor WHERE id = :id";
             $stmt = $this->db->getPdo()->prepare($sql);
-            $stmt->bindParam(':id', $userId);
-            $stmt->execute();
-            $nomeUsuario = $stmt->fetchColumn();
-
-            return $nomeUsuario;
-        } else {
-            return null; // Usuário não autenticado
-        }
-    }
-
-    public function getTokenUsuario()
-    {
-        // Verifique se o ID do usuário está na sessão
-        if (isset($_SESSION['user_id'])) {
-            $userId = $_SESSION['user_id'];
-
-            // Consulte o banco de dados para obter o nome do usuário com base no ID
-            $sql = "SELECT token FROM usuario WHERE id = :id";
-            $stmt = $this->db->getPdo()->prepare($sql);
-            $stmt->bindParam(':id', $userId);
+            $stmt->bindParam(':id', $coletorId);
             $stmt->execute();
             $tokenUsuario = $stmt->fetchColumn();
 
@@ -74,15 +54,15 @@ class Auth
         }
     }
 
-    public function getDetalhesUsuarioLogado()
+    public function getDetalhesColetorLogado()
     {
         // Verifique se o ID do usuário está na sessão
-        if (isset($_SESSION['user_id'])) {
-            $userId = $_SESSION['user_id'];
-            $user = new User($this->db);
-            return $user->getDadosUsuario($userId);
+        if (isset($_SESSION['coletor_id'])) {
+            $coletorId = $_SESSION['coletor_id'];
+            $coletor = new Coletor($this->db);
+            return $coletor->getDadosColetor($coletorId);
         } else {
-            return null; // Usuário não autenticado
+            return header('Location: http://localhost/greencoleta/login/'); // Usuário não autenticado
         }
     }
 
@@ -99,10 +79,7 @@ class Auth
         // Destrua a sessão
         session_destroy();
 
-        // Destrua o cookie de autenticação, se existir
-        if (isset($_COOKIE['auth_token'])) {
-            $cookieName = 'auth_token';
-            setcookie($cookieName, '', time() - 3600, '/');
-        }
+        
+
     }
 }

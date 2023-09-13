@@ -14,13 +14,13 @@
         <li><a href="<?= URL . 'dados' ?>" style="color: #538D22"><i class="material-icons left" style="margin-right: 5px;color: #538D22">info_outline</i>Dados</a></li>
         <li><a href="#!" style="color: #538D22"><i class="material-icons left" style="margin-right: 5px;color: #538D22">history</i>Histórico</a></li>
         <li class="divider"></li>
-        <li><a href="<?= URL . 'config/logout.php' ?>" style="color: red"><i class="material-icons left" style="margin-right: 5px;color: red">exit_to_app</i>Sair</a></li>
+        <li><a href="<?= URL . 'config/logout' ?>" style="color: red"><i class="material-icons left" style="margin-right: 5px;color: red">exit_to_app</i>Sair</a></li>
     </ul>
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
         <li><a href="<?= URL . 'dados' ?>" style="color: #538D22"><i class="material-icons left" style="margin-right: 5px;color: #538D22">info_outline</i>Dados</a></li>
         <li><a href="#!" style="color: #538D22"><i class="material-icons left" style="margin-right: 5px;color: #538D22">history</i>Histórico</a></li>
         <li class="divider"></li>
-        <li><a href="<?= URL . 'config/logout.php' ?>" style="color: red"><i class="material-icons left" style="margin-right: 5px;color: red">exit_to_app</i>Sair</a></li>
+        <li><a href="<?= URL . 'config/logout' ?>" style="color: red"><i class="material-icons left" style="margin-right: 5px;color: red">exit_to_app</i>Sair</a></li>
     </ul>
 </div>

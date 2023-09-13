@@ -1,7 +1,7 @@
 <div class="content">
     <nav style="background-color: #538D22">
         <div class="nav-wrapper container">
-            <a href="http://localhost/greencoleta/" class="brand-logo"><i class="material-icons">recycling</i>GreenColeta</a>
+            <a href="http://localhost/greencoleta/" class="brand-logo"><i class="material-icons hide-on-med-and-down">recycling</i>GreenColeta</a>
             <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <?php
             if ($_SERVER['REQUEST_URI'] != '/greencoleta/signup/' && $_SERVER['REQUEST_URI'] != '/greencoleta/login/') {

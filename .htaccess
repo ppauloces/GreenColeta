@@ -1,10 +1,20 @@
+# .htaccess na pasta principal (localhost/greencoleta/)
+
 RewriteEngine On
+RewriteBase /greencoleta/
 
-RewriteCond %{REQUEST_FILENAME} !-d
+# Se a solicitação não for para um arquivo existente
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-l
+# E não é um diretório existente
+RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^(.+)$ http://localhost/greencoleta/auth/index.php?url=$1 [QSA,L]
+# Redirecione todas as solicitações para a pasta "auth" e passe a URL como um parâmetro
+RewriteRule ^auth/(.*)$ auth/index.php?url=$1 [QSA,L]
+
+# Redirecione todas as solicitações para a pasta "coletor" e passe a URL como um parâmetro
+RewriteRule ^coletor/(.*)$ coletor/index.php?url=$1 [QSA,L]
+
+# Outras regras específicas podem ser adicionadas aqui, se necessário.
 
 ErrorDocument 403 http://localhost/greencoleta/
 

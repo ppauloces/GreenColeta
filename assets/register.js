@@ -20,6 +20,7 @@ radioButton2.addEventListener("click", function() {
   document.getElementById("label-usuario").style.color = "#9e9e9e";
 });
 
+/*
 $(document).ready(function() {
   $('select').formSelect();
 
@@ -62,4 +63,4 @@ $(document).ready(function() {
   });
 
 
-});
+});*/

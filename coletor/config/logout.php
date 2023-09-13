@@ -11,5 +11,7 @@ $auth = new Auth($db);
 
 $auth->destruirSessaoEcookie();
 
-// Redirecione o usuário para a página de login
 header('Location: http://localhost/greencoleta/login/');
+
+// Redirecione o usuário para a página de login
+

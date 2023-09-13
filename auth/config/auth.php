@@ -9,7 +9,7 @@ require_once $databasePath;
 $db = new Database();
 $auth = new Auth($db);
 
-if ($auth->autenticarPorSessao() || $auth->autenticarPorCookie()) {
+if ($auth->autenticarPorSessao()) {
 
     define('URL', 'http://localhost/greencoleta/auth/');
 
@@ -40,6 +40,6 @@ if ($auth->autenticarPorSessao() || $auth->autenticarPorCookie()) {
 
     $auth->destruirSessaoEcookie();
 
-    header('Location: http://localhost/greencoleta/login/');
+    define('URL', 'https://crudcomphp.com/login/');
     exit;
 }
