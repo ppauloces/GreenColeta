@@ -10,7 +10,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # Redirecione todas as solicitações para a pasta "auth" e passe a URL como um parâmetro
 RewriteRule ^auth/(.*)$ auth/index.php?url=$1 [QSA,L]
-
+RewriteRule ^auth/(\d+)/coleta$ coleta.php?id=$1 [L]
 # Redirecione todas as solicitações para a pasta "coletor" e passe a URL como um parâmetro
 RewriteRule ^coletor/(.*)$ coletor/index.php?url=$1 [QSA,L]
 

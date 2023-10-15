@@ -132,7 +132,7 @@
                                 classes: 'light-green darken-2'
                             });
                             setTimeout(function() {
-                                //window.location.href = data.url;
+                                window.location.href = data.url;
                             }, 2000);
 
                         } else if (data.status === 'error') {

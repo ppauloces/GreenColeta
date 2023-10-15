@@ -14,10 +14,8 @@ if ($auth->autenticarPorSessao()) {
     define('URL', 'http://localhost/greencoleta/coletor/');
 
     $coletor = $auth->getDetalhesColetorLogado();
-    
-    if(!$coletor){
-        $auth->destruirSessaoEcookie();
-    }
+}else{
+    $auth->destruirSessaoEcookie();
 }
 
 

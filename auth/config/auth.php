@@ -3,15 +3,20 @@
 $dir = __DIR__;
 
 $databasePath = realpath($dir . '/../classes/Auth.php');
-
+$coletorClasse = realpath($dir . '/../classes/Coleta.php');
 require_once $databasePath;
+require_once $coletorClasse;
 
 $db = new Database();
 $auth = new Auth($db);
+$coletas = new Coleta($db);
 
 if ($auth->autenticarPorSessao()) {
 
+
     define('URL', 'http://localhost/greencoleta/auth/');
+    define('URL_IMAGENS_UPLOAD', 'C:/xampp/htdocs/greencoleta/imagensColetas/');
+    define('GET_IMAGEM', 'http://localhost/greencoleta/imagensColetas/');
 
     $user = $auth->getDetalhesUsuarioLogado();
     //verificar campos vazios
@@ -39,7 +44,7 @@ if ($auth->autenticarPorSessao()) {
 } else {
 
     $auth->destruirSessaoEcookie();
-
-    define('URL', 'https://crudcomphp.com/login/');
+    echo 'oi';
+    
     exit;
 }

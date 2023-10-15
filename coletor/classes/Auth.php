@@ -79,7 +79,7 @@ class Auth
         // Destrua a sessão
         session_destroy();
 
-        
+        header('Location: http://localhost/greencoleta/login/');
 
     }
 }

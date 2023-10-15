@@ -26,23 +26,7 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    /*
-    public function updateDadosUsuario($userId, $nome , $email , $telefone , $cep , $endereco , $cidade , $estado , $numero)
-    {
-        $sql = "UPDATE usuario SET nome = :nome, email = :email, telefone = :telefone, endereco = :endereco, bairro = :bairro, cep = :cep, cidade = :cidade WHERE id = :id";
-        $stmt = $this->db->getPdo()->prepare($sql);
-        $stmt->bindParam(':id', $userId);
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':telefone', $telefone);
-        $stmt->bindParam(':endereco', $endereco);
-        $stmt->bindParam(':bairro', $bairro);
-        $stmt->bindParam(':cep', $cep);
-        $stmt->bindParam(':cidade', $cidade);
-        $stmt->execute();
-        return true;
-    }
-    */
+
 
     public function updateDadosUsuario($userId, $nome = null, $email = null, $telefone = null, $cep = null, $endereco = null, $cidade = null, $estado = null, $numero = null, $bairro = null)
 

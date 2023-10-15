@@ -104,5 +104,6 @@ class Auth
             $cookieName = 'auth_token';
             setcookie($cookieName, '', time() - 3600, '/');
         }
+        header('Location: http://localhost/greencoleta/login/');
     }
 }

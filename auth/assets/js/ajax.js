@@ -4,7 +4,7 @@ $(document).ready(function() {
         event.preventDefault();
         var formData = $(this).serialize();
         $.ajax({
-            url: '../crud/updateDados.php',
+            url: 'crud/updateDados.php',
             type: 'POST',
             data: formData,
             dataType: 'json',
@@ -33,4 +33,6 @@ $(document).ready(function() {
             }
         });
     });
+
+   
 });
