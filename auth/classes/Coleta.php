@@ -29,6 +29,20 @@ class Coleta {
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 
+	public function listaColetaPorUsuario($idUser)
+	{
+		$sql = "SELECT * FROM coletas WHERE id_user = :id ORDER BY id DESC";
+		$stmt = $this->db->getPdo()->prepare($sql);
+		$stmt->bindParam(':id', $idUser);
+		$stmt->execute();
+		if($stmt->rowCount() == 0){
+			die(header("Location: ../"));
+		}
+		$dados['qnt'] = $stmt->rowCount();
+		$dados['dados'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $dados;
+	}
+
 	
 	public function novaColeta($id_user, $papel, $plastico, $metal, $vidro, $ferro, $papelao, $eletronicos, $imagem, $cep, $rua, $cidade, $bairro, $estado, $numero, $ponto_referencia, $situacao, $token)
 	{

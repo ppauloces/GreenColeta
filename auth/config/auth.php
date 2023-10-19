@@ -44,7 +44,6 @@ if ($auth->autenticarPorSessao()) {
 } else {
 
     $auth->destruirSessaoEcookie();
-    echo 'oi';
     
     exit;
 }

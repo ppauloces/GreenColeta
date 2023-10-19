@@ -1,6 +1,7 @@
 <?php 
 $data_cadastro = explode(" ", $user['data_cadastro']);
 $data = date('d/m/Y', strtotime($data_cadastro[0]));
+$qnt = $coletas->listaColetaPorUsuario($user['id']);
 ?>
 <div class="container">
     <div class="row" style="margin-top: 20px;">
@@ -16,7 +17,7 @@ $data = date('d/m/Y', strtotime($data_cadastro[0]));
                     </h5>
 
                     <p>Cadastrado desde: <b><?= $data ?></b></p>
-                    <p><b>93</b> Coletas realizadas</p>
+                    <p><b><?= $qnt['qnt'] ?></b> Coletas realizadas</p>
                 </div>
             </div>
         </div>

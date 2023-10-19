@@ -36,7 +36,6 @@ $title = ucfirst($url[0]);
     include 'layouts/app.php';
 
 
-
     if ($url[0] == 'config') {
         $arquivo = 'config/' . $url[1] . '.php';
     } else {
